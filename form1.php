@@ -20,26 +20,54 @@
         td{
             padding:5px;
             border-radius:5%;
-            border:3px solid;
+            /*border:3px solid;*/
+        }
+        .error{
+            color:red;
+            border: 0px solid;
         }
     </style>
 </head>
 <body>
+<?php
+    $A="";
+    $B="";
+if(isset($_POST["submit"]))
+{
+    if (!filter_var($_POST["email"],FILTER_VALIDATE_EMAIL))
+    {
+        $A='Email is invalid';
+    }
+    if (!preg_match("/^[0-9]{10}]*$/",$_POST["mob"]))
+    {
+        $B='Mobile Number is INVALID';
+    }
+}
+?>
     <div>
     <h1> Registeration Form </h1>
     <table>
-        <FORM action="mukesh.php" method="post">
+        <FORM action="<?php 
+         echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
         <tr>
             <td><label for="fname">First name:</label></td>
             <td><input type="text" id="fname1" name="fname" required></td>
+            <td><span class="error">*</span></td>
         </tr>
         <tr>
             <td><label for="lname">Last name:</label></td>
             <td><input type="text" id="lname1" name="lname" required></td>
+            <td><span class="error">*</span></td>
         </tr>
         <tr>
             <td><label for="lname">Email:</label></td>
-            <td><input type="email" id="email1" name="email" required></td>
+            <td><input type="text" id="email1" name="email" required></td>
+            <td><span class="error">*<?php print($A) ?></span></td>
+        </tr>
+        <tr>
+            <td><label for="lname">Moblie No:</label></td>
+            <td><input type="text" id="mob1" name="mob" required></td>
+            <td><span class="error">*<?php print($B) ?></span></td>
         </tr>
         <tr>
             <td><label for="Address">Address:</label></td>
@@ -73,7 +101,20 @@
         </tr>
         <tr>
             <td>
-                <input type="submit" value="Submit"></td>
+            <label for="age"> VEHICAL:</label>
+            </td>
+            <td>
+            <input type="checkbox" id="vehicle1" name="vehicle[]" value="Bike">
+<label for="vehicle1"> I have a bike</label><br>
+<input type="checkbox" id="vehicle2" name="vehicle[]" value="Car">
+<label for="vehicle2"> I have a car</label><br>
+<input type="checkbox" id="vehicle3" name="vehicle[]" value="Boat">
+<label for="vehicle3"> I have a boat</label><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="submit" value="Submit"></td>
                 <td>
                 <input type="submit" formaction="/action_page2.php" value="Submit as Admin">
             </td>
@@ -82,4 +123,23 @@
     </table>
     </div>
 </body>
+<?php
+if (isset($_POST['submit']))
+{
+                $a=$_POST["fname"];
+                $b=$_POST["lname"];
+                $c=$_POST["age"];
+                $e=$_POST["date"];
+                $g=$_POST["region"];
+                $q=$_POST['vehicle'];
+
+                echo "<center>My name is <b>$a $b </b>and My age is <b>$c</b> <br></center>";
+                echo "<center>My Date of birth is <b>$e</b> and i live in <b>$g </b>region </center>"; 
+                echo"<center>I have following vehical<br></center>";
+                foreach($q as $p)
+                {
+                    echo ("<center>$p <br></center>");
+                }
+}
+?>
 </html>

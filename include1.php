@@ -1,0 +1,9 @@
+<?php 
+include('form1.php');
+?>
+<?php
+include('Factorial.php');
+?>
+<?php
+include('Fibonacci.php');
+?>
